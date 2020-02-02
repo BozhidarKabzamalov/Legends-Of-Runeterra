@@ -1,5 +1,13 @@
 <template>
     <div id="app">
+        <nav class='header'>
+            <div class="wrapper">
+                <ul class='navigation'>
+                    <router-link to="/" tag='li'>Home</router-link>
+                    <router-link to="/cards" tag='li'>Cards Gallery</router-link>
+                </ul>
+            </div>
+        </nav>
         <router-view/>
     </div>
 </template>
@@ -15,11 +23,29 @@
     }
     body {
         font-family: 'Roboto', 'Helvetica', 'Helvetica Neue', 'Arial', sans-serif;
+        background-color: #23343E;
         background-color: #0d202b;
-        color: #ffffff;
+        color: hsla(0,0%,100%,.87);
+    }
+    .wrapper {
+        width: 70%;
+        margin: 0 auto;
     }
     .responsive-image {
         width: 100%;
         height: 100%;
+    }
+    .header {
+        background-color: #0c1c25;
+        border-bottom: 3px solid #1b2d33;
+    }
+    .navigation {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+    }
+    .navigation li {
+        padding: 20px;
+        cursor: pointer;
     }
 </style>

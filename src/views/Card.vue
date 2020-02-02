@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import cards from '../assets/cards/set1-en_us.json'
+    import cards from '../assets/json/set1-en_us.json'
 
     export default {
         data(){

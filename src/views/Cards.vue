@@ -9,7 +9,9 @@
         </div>
         <div class="filters">
 
-            <input v-model="search" type="text" placeholder="Search...">
+            <div class="search-container">
+                <input class='search' v-model="search" type="text" placeholder="Search...">
+            </div>
 
             <div class="regions-container">
                 <div class='region' v-for='region in regions' @click='toggle(region)'>
@@ -22,6 +24,9 @@
 
             <div class="rarity-container">
                 <div class='rarity' v-for='rare in rarity' @click='toggle(rare)'>
+                    <div class="region-image">
+                        <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + ".png"' alt="">
+                    </div>
                     <div :class='[{ inactive: !rare.active }, rare.name]'></div>
                     <p>{{ rare.name }}</p>
                 </div>
@@ -29,37 +34,25 @@
 
             <div class='types-container'>
                 <div class="type" v-for='type in types' @click='toggle(type)'>
-                    <svg v-if='type.name == "Unit"' height="24" width="24" viewBox="0 0 24 24" class="card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M19.218 3.429L12.167 2 5.115 3.429S6.878 10.07 3 17.07L10.051 22l.635-10s-4.02 2.286-3.455-4.286l4.936-1.428 4.936 1.428c.564 6.5-3.456 4.286-3.456 4.286l.635 10 7.051-4.929c-3.807-7-2.115-13.642-2.115-13.642z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
-                    <svg v-else height="24" width="24" viewBox="0 0 24 24" class="card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M4.52 15.714s-.637-4.072 5.171-9.071c.284.357.638.714.992.928.991-.571 1.629-1.643 1.629-2.785 0-1.215-.638-2.215-1.63-2.786 2.126 0 5.596 3.143 5.596 8.142v.643c-.495-.357-1.204-.571-1.841-.571-1.558 0-2.975.857-3.683 2.143.779 1.285 2.125 2.142 3.683 2.142 1.558 0 3.116-1.071 3.754-2.5a5.85 5.85 0 011.204 2.5s.992 4.429-3.117 6.5c-4.108 2.071-8.074.286-8.074.286s3.895.071 4.958-3c0-.072-4.746.643-8.641-2.571z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
-                    <p>{{ type.name }}</p>
+                    <svg v-if='type.name == "Unit"' height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M19.218 3.429L12.167 2 5.115 3.429S6.878 10.07 3 17.07L10.051 22l.635-10s-4.02 2.286-3.455-4.286l4.936-1.428 4.936 1.428c.564 6.5-3.456 4.286-3.456 4.286l.635 10 7.051-4.929c-3.807-7-2.115-13.642-2.115-13.642z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
+                    <svg v-else height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M4.52 15.714s-.637-4.072 5.171-9.071c.284.357.638.714.992.928.991-.571 1.629-1.643 1.629-2.785 0-1.215-.638-2.215-1.63-2.786 2.126 0 5.596 3.143 5.596 8.142v.643c-.495-.357-1.204-.571-1.841-.571-1.558 0-2.975.857-3.683 2.143.779 1.285 2.125 2.142 3.683 2.142 1.558 0 3.116-1.071 3.754-2.5a5.85 5.85 0 011.204 2.5s.992 4.429-3.117 6.5c-4.108 2.071-8.074.286-8.074.286s3.895.071 4.958-3c0-.072-4.746.643-8.641-2.571z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
+                    <p>{{ type.name }}s</p>
                 </div>
             </div>
 
-            <div>
-                <input type="checkbox" value="0" v-model="cost">
-                <label>0</label>
-                <input type="checkbox" value="1" v-model="cost">
-                <label>1</label>
-                <input type="checkbox" value="2" v-model="cost">
-                <label>2</label>
-                <input type="checkbox" value="3" v-model="cost">
-                <label>3</label>
-                <input type="checkbox" value="4" v-model="cost">
-                <label>4</label>
-                <input type="checkbox" value="5" v-model="cost">
-                <label>5</label>
-                <input type="checkbox" value="6" v-model="cost">
-                <label>6</label>
-                <input type="checkbox" value="7" v-model="cost">
-                <label>7</label>
+            <div class="costs-container">
+                <div class='cost' v-for='cost in costs' @click='toggle(cost)'>
+                    <p>{{ cost.cost }}</p>
+                </div>
             </div>
+
         </div>
     </div>
 
 </template>
 
 <script>
-    import cards from '../assets/cards/set1-en_us.json'
+    import cards from '../assets/json/set1-en_us.json'
     import router from '../router'
 
     export default {
@@ -76,14 +69,29 @@
                     { name: "Ionia", active: true, icon: 'ionia' },
                     { name: "Piltover & Zaun", active: true, icon: 'piltoverzaun' },
                 ],
-                cost: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                cost: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                costs: [
+                    { cost: 0, active: true },
+                    { cost: 1, active: true },
+                    { cost: 2, active: true },
+                    { cost: 3, active: true },
+                    { cost: 4, active: true },
+                    { cost: 5, active: true },
+                    { cost: 6, active: true },
+                    { cost: 7, active: true },
+                    { cost: 8, active: true },
+                    { cost: 9, active: true },
+                    { cost: 10, active: true },
+                    { cost: 11, active: true },
+                    { cost: 12, active: true },
+                ],
                 attack: null,
                 health: null,
                 rarity: [
-                    { name: 'Common', active: true },
-                    { name: 'Rare', active: true },
-                    { name: 'Epic', active: true },
                     { name: 'Champion', active: true },
+                    { name: 'Epic', active: true },
+                    { name: 'Rare', active: true },
+                    { name: 'Common', active: true },
                 ],
                 types: [
                     { name: 'Unit', active: true },
@@ -99,7 +107,18 @@
                 object.active = !object.active
             },
             sortedByCost(cards){
-                return cards.sort((a, b) => a.cost - b.cost)
+
+                cards.sort((a, b) => {
+                    if (a.cost > b.cost) return 1;
+                    if (a.cost < b.cost) return -1;
+
+                    if (a.name > b.name) return 1;
+                    if (a.name < b.name) return -1;
+                })
+
+                return cards.sort((a, b) => {
+                    return a.cost - b.cost
+                })
             },
             filteredByCollectible(cards){
                 return cards.filter((card) => {
@@ -131,8 +150,17 @@
             },
             filteredByCost(cards){
                 if (!this.cost) return cards
+
+                let activeCosts = this.costs.filter((cost) => {
+                    return cost.active === true
+                })
+
+                let activeCostsStrings = activeCosts.map((activeCost) => {
+                    return activeCost.cost
+                })
+
                 return cards.filter((card) => {
-                    return this.cost.includes(card.cost)
+                    return activeCostsStrings.includes(card.cost)
                 })
             },
             filteredByRarity(cards){
@@ -215,18 +243,58 @@
         height: auto;
     }
     .filters {
-        width: 300px;
+        width: 350px;
         background-color: #0c1c25;
-        padding-top: 20px;
+        padding: 20px 10px 20px 10px;
+        border-left: 3px solid #1b2d33;
     }
-    .regions-container, .rarity-container, .types-container {
-        margin-bottom: 40px;
+    .search {
+        border: 1px solid #ffffff;
+        padding: 4px 15px;
+        background-color: #ffffff;
+        color: #606060;
+        outline: none;
+    }
+    ::placeholder {
+        color: #757575;
+        opacity: 1;
+    }
+    .regions-container, .rarity-container, .types-container, .search-container, .costs-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #1b2d33;
     }
     .region, .rarity, .type {
+        font-weight: 500;
+        font-size: 14px;
+        width: 50%;
         display: flex;
         flex-direction: row;
         align-items: center;
         margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .cost {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: #0d202b;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2) {
+        margin-bottom: 0px;
+    }
+    .svg {
+        margin-right: 10px;
     }
     .region-image {
         margin-right: 10px;
@@ -235,26 +303,5 @@
     }
     .inactive {
         filter: grayscale(100%);
-    }
-    .Champion, .Epic, .Rare, .Common {
-        height: 20px;
-        width: 20px;
-        margin-right: 10px;
-    }
-    .Champion {
-        background-color: #f7d74c;
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    }
-    .Epic {
-        background-color: #ef81ff;
-        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    }
-    .Rare {
-        background-color: #b2ffff;
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    }
-    .Common {
-        background-color: #b2ff6c;
-        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     }
 </style>

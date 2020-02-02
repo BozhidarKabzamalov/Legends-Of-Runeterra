@@ -11,8 +11,7 @@
 <style scoped>
     .home {
         background-image: url('../assets/cards/01PZ040T1-full.png');
-        width: 100vw;
-        height: 100vh;
+        height: calc(100vh - 62px);
         background-size: cover;
         background-position: center center;
     }
