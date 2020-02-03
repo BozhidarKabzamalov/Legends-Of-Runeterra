@@ -1,16 +1,20 @@
 <template>
     <div class="cards">
-        <div class="cards-list">
-            <div class="card" v-for='card in filteredByAll' @click='specificCard(card.cardCode)'>
-                <div class="card-image">
-                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
-                </div>
-            </div>
-        </div>
+
         <div class="filters">
+
+            <div class="separator">
+                <p class='separator-title'>Search</p>
+                <div class='separator-line'></div>
+            </div>
 
             <div class="search-container">
                 <input class='search' v-model="search" type="text" placeholder="Search...">
+            </div>
+
+            <div class="separator">
+                <p class='separator-title'>Regions</p>
+                <div class='separator-line'></div>
             </div>
 
             <div class="regions-container">
@@ -20,6 +24,11 @@
                     </div>
                     <p>{{ region.name }}</p>
                 </div>
+            </div>
+
+            <div class="separator">
+                <p class='separator-title'>Rarity</p>
+                <div class='separator-line'></div>
             </div>
 
             <div class="rarity-container">
@@ -32,12 +41,22 @@
                 </div>
             </div>
 
+            <div class="separator">
+                <p class='separator-title'>Types</p>
+                <div class='separator-line'></div>
+            </div>
+
             <div class='types-container'>
                 <div class="type" v-for='type in types' @click='toggle(type)'>
                     <svg v-if='type.name == "Unit"' height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M19.218 3.429L12.167 2 5.115 3.429S6.878 10.07 3 17.07L10.051 22l.635-10s-4.02 2.286-3.455-4.286l4.936-1.428 4.936 1.428c.564 6.5-3.456 4.286-3.456 4.286l.635 10 7.051-4.929c-3.807-7-2.115-13.642-2.115-13.642z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
                     <svg v-else height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M4.52 15.714s-.637-4.072 5.171-9.071c.284.357.638.714.992.928.991-.571 1.629-1.643 1.629-2.785 0-1.215-.638-2.215-1.63-2.786 2.126 0 5.596 3.143 5.596 8.142v.643c-.495-.357-1.204-.571-1.841-.571-1.558 0-2.975.857-3.683 2.143.779 1.285 2.125 2.142 3.683 2.142 1.558 0 3.116-1.071 3.754-2.5a5.85 5.85 0 011.204 2.5s.992 4.429-3.117 6.5c-4.108 2.071-8.074.286-8.074.286s3.895.071 4.958-3c0-.072-4.746.643-8.641-2.571z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
                     <p>{{ type.name }}s</p>
                 </div>
+            </div>
+
+            <div class="separator">
+                <p class='separator-title'>Costs</p>
+                <div class='separator-line'></div>
             </div>
 
             <div class="costs-container">
@@ -47,6 +66,15 @@
             </div>
 
         </div>
+
+        <div class="cards-list">
+            <div class="card" v-for='card in filteredByAll' @click='specificCard(card.cardCode)'>
+                <div class="card-image">
+                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -69,7 +97,6 @@
                     { name: "Ionia", active: true, icon: 'ionia' },
                     { name: "Piltover & Zaun", active: true, icon: 'piltoverzaun' },
                 ],
-                cost: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 costs: [
                     { cost: 0, active: true },
                     { cost: 1, active: true },
@@ -246,7 +273,8 @@
         width: 350px;
         background-color: #0c1c25;
         padding: 20px 10px 20px 10px;
-        border-left: 3px solid #1b2d33;
+        /*border-left: 3px solid #1b2d33;*/
+        border-right: 3px solid #1b2d33;
     }
     .search {
         border: 1px solid #ffffff;
@@ -264,9 +292,9 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        padding-bottom: 20px;
+        /*padding-bottom: 20px;*/
         margin-bottom: 20px;
-        border-bottom: 3px solid #1b2d33;
+        /*border-bottom: 3px solid #1b2d33;*/
     }
     .region, .rarity, .type {
         font-weight: 500;
@@ -290,7 +318,7 @@
         margin-right: 10px;
         margin-bottom: 10px;
     }
-    .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2) {
+    .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2), .cost:nth-last-child(-n+1) {
         margin-bottom: 0px;
     }
     .svg {
@@ -303,5 +331,20 @@
     }
     .inactive {
         filter: grayscale(100%);
+    }
+    .separator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .separator-title {
+        font-weight: 500;
+    }
+    .separator-line {
+        margin-left: 10px;
+        height: 3px;
+        width: 100%;
+        background-color: #1b2d33;
     }
 </style>
