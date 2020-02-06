@@ -18,7 +18,7 @@
             </div>
 
             <div class="regions-container">
-                <div class='region' v-for='region in regions' @click='toggle(region)'>
+                <div class='region' v-for='region in regions' @click='toggle(regions, region)'>
                     <div class="region-image">
                         <img class='responsive-image' :class='{ inactive: !region.active }' :src='"../assets/regions/" + region.icon + ".png"' alt="">
                     </div>
@@ -32,7 +32,7 @@
             </div>
 
             <div class="rarity-container">
-                <div class='rarity' v-for='rare in rarity' @click='toggle(rare)'>
+                <div class='rarity' v-for='rare in rarity' @click='toggle(rarity, rare)'>
                     <div class="region-image">
                         <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + ".png"' alt="">
                     </div>
@@ -42,12 +42,12 @@
             </div>
 
             <div class="separator">
-                <p class='separator-title'>Types</p>
+                <p class='separator-title'>Type</p>
                 <div class='separator-line'></div>
             </div>
 
             <div class='types-container'>
-                <div class="type" v-for='type in types' @click='toggle(type)'>
+                <div class="type" v-for='type in types' @click='toggle(types, type)'>
                     <svg v-if='type.name == "Unit"' height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M19.218 3.429L12.167 2 5.115 3.429S6.878 10.07 3 17.07L10.051 22l.635-10s-4.02 2.286-3.455-4.286l4.936-1.428 4.936 1.428c.564 6.5-3.456 4.286-3.456 4.286l.635 10 7.051-4.929c-3.807-7-2.115-13.642-2.115-13.642z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
                     <svg v-else height="24" width="24" viewBox="0 0 24 24" class="svg card-type-imagestyles__Image-xzyzdp-0 EzAkp card-type-selectorstyles__CardTypeImageStyled-hf9r3e-2 dDHzPQ"><path d="M4.52 15.714s-.637-4.072 5.171-9.071c.284.357.638.714.992.928.991-.571 1.629-1.643 1.629-2.785 0-1.215-.638-2.215-1.63-2.786 2.126 0 5.596 3.143 5.596 8.142v.643c-.495-.357-1.204-.571-1.841-.571-1.558 0-2.975.857-3.683 2.143.779 1.285 2.125 2.142 3.683 2.142 1.558 0 3.116-1.071 3.754-2.5a5.85 5.85 0 011.204 2.5s.992 4.429-3.117 6.5c-4.108 2.071-8.074.286-8.074.286s3.895.071 4.958-3c0-.072-4.746.643-8.641-2.571z" fill="#a5a0bb" fill-rule="nonzero"></path></svg>
                     <p>{{ type.name }}s</p>
@@ -55,13 +55,40 @@
             </div>
 
             <div class="separator">
-                <p class='separator-title'>Costs</p>
+                <p class='separator-title'>Cost</p>
                 <div class='separator-line'></div>
             </div>
 
             <div class="costs-container">
-                <div class='cost' v-for='cost in costs' @click='toggle(cost)'>
-                    <p>{{ cost.cost }}</p>
+                <div v-for='cost in costs' @click='toggle(costs, cost)'>
+                    <div :class="[{ inactiveCircle: !cost.active }, 'cost']">
+                        <p v-if='cost.cost === 7'>{{ cost.cost }}+</p>
+                        <p v-else>{{ cost.cost }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="separator">
+                <p class='separator-title'>Attack</p>
+                <div class='separator-line'></div>
+            </div>
+
+            <div class="costs-container">
+                <div class='cost' v-for='attack in attack' @click='toggle(attack, attack)'>
+                    <p v-if='attack.attack === 7'>{{ attack.attack }}+</p>
+                    <p v-else>{{ attack.attack }}</p>
+                </div>
+            </div>
+
+            <div class="separator">
+                <p class='separator-title'>Health</p>
+                <div class='separator-line'></div>
+            </div>
+
+            <div class="costs-container">
+                <div class='cost' v-for='health in health' @click='toggle(health)'>
+                    <p v-if='health.health === 7'>{{ health.health }}+</p>
+                    <p v-else>{{ health.health }}</p>
                 </div>
             </div>
 
@@ -106,14 +133,27 @@
                     { cost: 5, active: true },
                     { cost: 6, active: true },
                     { cost: 7, active: true },
-                    { cost: 8, active: true },
-                    { cost: 9, active: true },
-                    { cost: 10, active: true },
-                    { cost: 11, active: true },
-                    { cost: 12, active: true },
                 ],
-                attack: null,
-                health: null,
+                attack: [
+                    { attack: 0, active: true },
+                    { attack: 1, active: true },
+                    { attack: 2, active: true },
+                    { attack: 3, active: true },
+                    { attack: 4, active: true },
+                    { attack: 5, active: true },
+                    { attack: 6, active: true },
+                    { attack: 7, active: true }
+                ],
+                health: [
+                    { health: 0, active: true },
+                    { health: 1, active: true },
+                    { health: 2, active: true },
+                    { health: 3, active: true },
+                    { health: 4, active: true },
+                    { health: 5, active: true },
+                    { health: 6, active: true },
+                    { health: 7, active: true }
+                ],
                 rarity: [
                     { name: 'Champion', active: true },
                     { name: 'Epic', active: true },
@@ -130,7 +170,16 @@
             specificCard(cardCode){
                 router.push({ name: 'specificCard', params: { cardCode: cardCode } })
             },
-            toggle(object){
+            toggle(filterType, object){
+
+                let areAllFiltersActive = filterType.every(type => type.active)
+
+                if (areAllFiltersActive) {
+                    for (var i = 0; i < filterType.length; i++) {
+                        filterType[i].active = false
+                    }
+                }
+
                 object.active = !object.active
             },
             sortedByCost(cards){
@@ -176,7 +225,7 @@
                 })
             },
             filteredByCost(cards){
-                if (!this.cost) return cards
+                if (!this.costs) return cards
 
                 let activeCosts = this.costs.filter((cost) => {
                     return cost.active === true
@@ -186,8 +235,10 @@
                     return activeCost.cost
                 })
 
+                let includesSevenCost = activeCostsStrings.includes(7)
+
                 return cards.filter((card) => {
-                    return activeCostsStrings.includes(card.cost)
+                    return activeCostsStrings.includes(card.cost) || (card.cost > 7 && includesSevenCost)
                 })
             },
             filteredByRarity(cards){
@@ -222,14 +273,36 @@
             },
             filteredByAttack(cards){
                 if (!this.attack) return cards
+
+                let activeAttacks = this.attack.filter((attack) => {
+                    return attack.active === true
+                })
+
+                let activeAttacksStrings = activeAttacks.map((activeAttack) => {
+                    return activeAttack.attack
+                })
+
+                let includesSevenAttack = activeAttacksStrings.includes(7)
+
                 return cards.filter((card) => {
-                    return this.attack.includes(card.attack)
+                    return activeAttacksStrings.includes(card.attack) || (card.attack > 7 && includesSevenAttack)
                 })
             },
             filteredByHealth(cards){
                 if (!this.health) return cards
+
+                let activeHealth = this.health.filter((health) => {
+                    return health.active === true
+                })
+
+                let activeHealthStrings = activeHealth.map((activeHealth) => {
+                    return activeHealth.health
+                })
+
+                let includesSevenHealth = activeHealthStrings.includes(7)
+
                 return cards.filter((card) => {
-                    return this.health.includes(card.health)
+                    return activeHealthStrings.includes(card.health) || (card.health > 7 && includesSevenHealth)
                 })
             }
         },
@@ -249,11 +322,12 @@
         display: flex;
     }
     .cards-list {
-        padding-top: 20px;
+        padding: 20px;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
         justify-content: space-evenly;
+        align-content: flex-start;
     }
     .card {
         display: flex;
@@ -273,7 +347,6 @@
         width: 350px;
         background-color: #0c1c25;
         padding: 20px 10px 20px 10px;
-        /*border-left: 3px solid #1b2d33;*/
         border-right: 3px solid #1b2d33;
     }
     .search {
@@ -292,9 +365,7 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        /*padding-bottom: 20px;*/
         margin-bottom: 20px;
-        /*border-bottom: 3px solid #1b2d33;*/
     }
     .region, .rarity, .type {
         font-weight: 500;
@@ -314,11 +385,15 @@
         width: 50px;
         border-radius: 50%;
         background-color: #0d202b;
+        border: 3px solid #1b2d33;
         cursor: pointer;
         margin-right: 10px;
         margin-bottom: 10px;
     }
-    .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2), .cost:nth-last-child(-n+1) {
+    .inactiveCircle {
+        background-color: #071218;
+    }
+    .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2) {
         margin-bottom: 0px;
     }
     .svg {
