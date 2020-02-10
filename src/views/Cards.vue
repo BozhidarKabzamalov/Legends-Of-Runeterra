@@ -74,9 +74,11 @@
             </div>
 
             <div class="costs-container">
-                <div class='cost' v-for='attack in attack' @click='toggle(attack, attack)'>
-                    <p v-if='attack.attack === 7'>{{ attack.attack }}+</p>
-                    <p v-else>{{ attack.attack }}</p>
+                <div v-for='attack in attackValues' @click='toggle(attackValues, attack)'>
+                    <div :class="[{ inactiveCircle: !attack.active }, 'cost']">
+                        <p v-if='attack.attack === 7'>{{ attack.attack }}+</p>
+                        <p v-else>{{ attack.attack }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -86,9 +88,11 @@
             </div>
 
             <div class="costs-container">
-                <div class='cost' v-for='health in health' @click='toggle(health)'>
-                    <p v-if='health.health === 7'>{{ health.health }}+</p>
-                    <p v-else>{{ health.health }}</p>
+                <div v-for='health in healthValues' @click='toggle(healthValues, health)'>
+                    <div :class="[{ inactiveCircle: !health.active }, 'cost']">
+                        <p v-if='health.health === 7'>{{ health.health }}+</p>
+                        <p v-else>{{ health.health }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -117,12 +121,12 @@
                 collectibleCards: null,
                 search: '',
                 regions: [
-                    { name: "Noxus", active: true, icon: 'noxus' },
-                    { name: "Demacia", active: true, icon: 'demacia' },
-                    { name: "Shadow Isles", active: true, icon: 'shadowisles' },
-                    { name: "Freljord", active: true, icon: 'freljord' },
-                    { name: "Ionia", active: true, icon: 'ionia' },
-                    { name: "Piltover & Zaun", active: true, icon: 'piltoverzaun' },
+                    { name: "Noxus", active: true, icon: 'Noxus' },
+                    { name: "Demacia", active: true, icon: 'Demacia' },
+                    { name: "Shadow Isles", active: true, icon: 'ShadowIsles' },
+                    { name: "Freljord", active: true, icon: 'Freljord' },
+                    { name: "Ionia", active: true, icon: 'Ionia' },
+                    { name: "Piltover & Zaun", active: true, icon: 'PiltoverZaun' },
                 ],
                 costs: [
                     { cost: 0, active: true },
@@ -134,7 +138,7 @@
                     { cost: 6, active: true },
                     { cost: 7, active: true },
                 ],
-                attack: [
+                attackValues: [
                     { attack: 0, active: true },
                     { attack: 1, active: true },
                     { attack: 2, active: true },
@@ -144,7 +148,7 @@
                     { attack: 6, active: true },
                     { attack: 7, active: true }
                 ],
-                health: [
+                healthValues: [
                     { health: 0, active: true },
                     { health: 1, active: true },
                     { health: 2, active: true },
@@ -171,7 +175,6 @@
                 router.push({ name: 'specificCard', params: { cardCode: cardCode } })
             },
             toggle(filterType, object){
-
                 let areAllFiltersActive = filterType.every(type => type.active)
 
                 if (areAllFiltersActive) {
@@ -272,9 +275,9 @@
                 })
             },
             filteredByAttack(cards){
-                if (!this.attack) return cards
+                if (!this.attackValues) return cards
 
-                let activeAttacks = this.attack.filter((attack) => {
+                let activeAttacks = this.attackValues.filter((attack) => {
                     return attack.active === true
                 })
 
@@ -289,9 +292,9 @@
                 })
             },
             filteredByHealth(cards){
-                if (!this.health) return cards
+                if (!this.healthValues) return cards
 
-                let activeHealth = this.health.filter((health) => {
+                let activeHealth = this.healthValues.filter((health) => {
                     return health.active === true
                 })
 
@@ -344,7 +347,7 @@
         height: auto;
     }
     .filters {
-        width: 350px;
+        flex: 0 0 300px;
         background-color: #0c1c25;
         padding: 20px 10px 20px 10px;
         border-right: 3px solid #1b2d33;
@@ -391,7 +394,7 @@
         margin-bottom: 10px;
     }
     .inactiveCircle {
-        background-color: #071218;
+
     }
     .region:nth-last-child(-n+2), .rarity:nth-last-child(-n+2), .type:nth-last-child(-n+2) {
         margin-bottom: 0px;
