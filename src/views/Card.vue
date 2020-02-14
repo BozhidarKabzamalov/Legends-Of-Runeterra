@@ -1,87 +1,75 @@
 <template>
-    <div v-if='card' class="card wrapper">
+    <div v-if='card' class="card card-wrapper">
 
-        <div class="associated-cards">
-            <div class="card-images">
-                <!--<div v-for='card in associatedCards' class="card-image">
-                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
-                    <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
-                </div>-->
-                <div class="card-image">
-                    <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
-                    <p>Artist: {{ card.artistName }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-information">
+        <div class="card-header">
             <p class='card-name'>{{ card.name }}</p>
             <div class='region-rarity-type-container'>
-
                 <div class='region'>
                     <div class="region-image">
-                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + "-30.png"' alt="">
                     </div>
-                    <p>{{ card.region }}</p>
+                    <p :class='card.regionRef'>{{ card.region }}</p>
                 </div>
-
                 <div class='rarity'>
                     <div class="rarity-image">
-                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + "-30.png"' alt="">
                     </div>
-                    <p>{{ card.rarity }}</p>
+                    <p :class='card.rarity'>{{ card.rarity }}</p>
                 </div>
-
                 <div class='type'>
                     <div class='type-image'>
-                        <img class='responsive-image' :src='"../assets/types/" + card.type + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/types/" + card.type + "-30.png"' alt="">
                     </div>
                     <p>{{ card.type }}</p>
                 </div>
-
             </div>
-
-            <div class="description-container">
-                <div class="separator">
-                    <p class='separator-title'>Description</p>
-                    <div class='separator-line'></div>
-                </div>
-                <p>{{ card.descriptionRaw }}</p>
-            </div>
-
-
-
-            <div class="level-up-container">
-                <div class="separator">
-                    <p class='separator-title'>Level Up</p>
-                    <div class='separator-line'></div>
-                </div>
-                <p>{{ card.levelupDescriptionRaw }}</p>
-            </div>
-
-            <div class="flavor-text-container">
-                <div class="separator">
-                    <p class='separator-title'>Flavor Text</p>
-                    <div class='separator-line'></div>
-                </div>
-                <p>{{ card.flavorText }}</p>
-            </div>
-
-            <div class="keywords-container">
-                <div class="separator">
-                    <p class='separator-title'>Keywords</p>
-                    <div class='separator-line'></div>
-                </div>
-                <p v-for='keywords in card.keywords'>{{ keywords }}</p>
-            </div>
-
-
-
-
-
-
         </div>
 
+        <div class="card-body">
+            <div class="associated-cards">
+                <div class="card-images">
+                    <!--<div v-for='card in associatedCards' class="card-image">
+                        <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
+                    </div>-->
+                    <div class="card-image">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
+                        <p>Artist: {{ card.artistName }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-information">
+                <div class="description-container">
+                    <div class="separator">
+                        <p class='separator-title'>Description</p>
+                        <div class='separator-line'></div>
+                    </div>
+                    <p>{{ card.descriptionRaw }}</p>
+                </div>
+                <div class="level-up-container">
+                    <div class="separator">
+                        <p class='separator-title'>Level Up</p>
+                        <div class='separator-line'></div>
+                    </div>
+                    <p>{{ card.levelupDescriptionRaw }}</p>
+                </div>
+                <div class="flavor-text-container">
+                    <div class="separator">
+                        <p class='separator-title'>Flavor Text</p>
+                        <div class='separator-line'></div>
+                    </div>
+                    <p><i>{{ card.flavorText }}</i></p>
+                </div>
+                <div class="keywords-container">
+                    <div class="separator">
+                        <p class='separator-title'>Keywords</p>
+                        <div class='separator-line'></div>
+                    </div>
+                    <p v-for='keywords in card.keywords'>{{ keywords }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -115,8 +103,14 @@
 
 <style scoped>
     .card {
-        display: flex;
         padding-top: 20px;
+    }
+    .card-wrapper {
+        width: 40%;
+        margin: 0 auto;
+    }
+    .card-body {
+        display: flex;
     }
     .card-information {
         padding-left: 20px;

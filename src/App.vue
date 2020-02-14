@@ -32,6 +32,7 @@
         margin: 0 auto;
     }
     .responsive-image {
+        display: block;
         width: 100%;
         height: 100%;
     }
@@ -47,5 +48,35 @@
     .navigation li {
         padding: 20px;
         cursor: pointer;
+    }
+    .Noxus {
+        color: #ae4b41;
+    }
+    .Demacia {
+        color: #e8e8e1;
+    }
+    .Ionia {
+        color: #c16d89;
+    }
+    .Freljord {
+        color: #5bacd1;
+    }
+    .ShadowIsles {
+        color: #4aa494;
+    }
+    .PiltoverZaun {
+        color: #da996c;
+    }
+    .Champion {
+        color: #f1d242;
+    }
+    .Epic {
+        color: #e881f8;
+    }
+    .Rare {
+        color: #4ba4e4;
+    }
+    .Common {
+        color: #45a923;
     }
 </style>
