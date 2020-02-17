@@ -6,19 +6,19 @@
             <div class='region-rarity-type-container'>
                 <div class='region'>
                     <div class="region-image">
-                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + "-30.png"' alt="">
+                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + ".png"' :alt="card.region">
                     </div>
                     <p :class='card.regionRef'>{{ card.region }}</p>
                 </div>
                 <div class='rarity'>
                     <div class="rarity-image">
-                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + "-30.png"' alt="">
+                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + ".png"' :alt="card.rarity">
                     </div>
                     <p :class='card.rarity'>{{ card.rarity }}</p>
                 </div>
                 <div class='type'>
                     <div class='type-image'>
-                        <img class='responsive-image' :src='"../assets/types/" + card.type + "-30.png"' alt="">
+                        <img class='responsive-image' :src='"../assets/types/" + card.type + ".png"' :alt="card.type">
                     </div>
                     <p>{{ card.type }}</p>
                 </div>
@@ -29,11 +29,11 @@
             <div class="associated-cards">
                 <div class="card-images">
                     <!--<div v-for='card in associatedCards' class="card-image">
-                        <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
-                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' :alt="card.name">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' :alt="card.name">
                     </div>-->
                     <div class="card-image">
-                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' alt="">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' :alt="card.name">
                         <p>Artist: {{ card.artistName }}</p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <p>{{ card.descriptionRaw }}</p>
                 </div>
-                <div class="level-up-container">
+                <div class="level-up-container" v-if='card.levelupDescriptionRaw > 0'>
                     <div class="separator">
                         <p class='separator-title'>Level Up</p>
                         <div class='separator-line'></div>
@@ -61,7 +61,7 @@
                     </div>
                     <p><i>{{ card.flavorText }}</i></p>
                 </div>
-                <div class="keywords-container">
+                <div class="keywords-container" v-if='card.keywords.length > 0'>
                     <div class="separator">
                         <p class='separator-title'>Keywords</p>
                         <div class='separator-line'></div>
@@ -155,7 +155,8 @@
         margin-bottom: 20px;
     }
     .separator-title {
-        font-weight: 500;
+        font-weight: 700;
+        font-size: 20px;
         flex: 0 0 100px;
     }
     .separator-line {

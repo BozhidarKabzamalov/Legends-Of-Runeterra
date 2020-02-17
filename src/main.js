@@ -4,6 +4,10 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import VueLazyload from 'vue-lazyload'
+
+Vue.use(VueLazyload)
+
 new Vue({
   router,
   render: h => h(App)

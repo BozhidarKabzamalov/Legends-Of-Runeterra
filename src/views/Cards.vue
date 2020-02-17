@@ -20,7 +20,7 @@
             <div class="regions-container">
                 <div class='region' v-for='region in regions' @click='toggle(regions, region)'>
                     <div class="region-image">
-                        <img class='responsive-image' :class='{ inactive: !region.active }' :src='"../assets/regions/" + region.icon + "-30.png"' alt="">
+                        <img class='responsive-image' :class='{ inactive: !region.active }' :src='"../assets/regions/" + region.icon + ".png"' :alt="region.name">
                     </div>
                     <p :class='[{inactive: !region.active }, region.icon]'>{{ region.name }}</p>
                 </div>
@@ -34,7 +34,7 @@
             <div class="rarity-container">
                 <div class='rarity' v-for='rare in rarity' @click='toggle(rarity, rare)'>
                     <div class="region-image">
-                        <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + "-30.png"' alt="">
+                        <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + ".png"' :alt="rare.name">
                     </div>
                     <p :class='[{inactive: !rare.active }, rare.name]'>{{ rare.name }}</p>
                 </div>
@@ -48,7 +48,7 @@
             <div class='types-container'>
                 <div class="type" v-for='type in types' @click='toggle(types, type)'>
                     <div class='type-image'>
-                        <img class='responsive-image' :class='{ inactive: !type.active }' :src='"../assets/types/" + type.name + "-30.png"' alt="">
+                        <img class='responsive-image' :class='{ inactive: !type.active }' :src='"../assets/types/" + type.name + ".png"' :alt="type.name">
                     </div>
                     <p :class='{inactive: !type.active }'>{{ type.name }}s</p>
                 </div>
@@ -101,7 +101,7 @@
         <div class="cards-list">
             <div class="card" v-for='card in filteredByAll' @click='specificCard(card.cardCode)'>
                 <div class="card-image">
-                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' alt="">
+                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' :alt="card.name">
                 </div>
             </div>
         </div>
@@ -333,6 +333,8 @@
         align-content: flex-start;
     }
     .card {
+        width: 240px;
+        height: 361.59px;
         display: flex;
         justify-content: center;
         align-items: center;
