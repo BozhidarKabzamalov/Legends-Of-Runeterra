@@ -4,10 +4,6 @@
     </div>
 </template>
 
-<script>
-
-</script>
-
 <style scoped>
     .home {
         background-image: url('../assets/cards/01PZ040T1-full.png');

@@ -20,7 +20,7 @@
             <div class="regions-container">
                 <div class='region' v-for='region in regions' @click='toggle(regions, region)'>
                     <div class="region-image">
-                        <img class='responsive-image' :class='{ inactive: !region.active }' :src='"../assets/regions/" + region.icon + ".png"' :alt="region.name">
+                        <img class='responsive-image' :class='{ inactive: !region.active }' :src='"../assets/regions/" + region.icon + ".webp"' :alt="region.name">
                     </div>
                     <p :class='[{inactive: !region.active }, region.icon]'>{{ region.name }}</p>
                 </div>
@@ -34,7 +34,7 @@
             <div class="rarity-container">
                 <div class='rarity' v-for='rare in rarity' @click='toggle(rarity, rare)'>
                     <div class="region-image">
-                        <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + ".png"' :alt="rare.name">
+                        <img class='responsive-image' :class='{ inactive: !rare.active }' :src='"../assets/rarity/" + rare.name + ".webp"' :alt="rare.name">
                     </div>
                     <p :class='[{inactive: !rare.active }, rare.name]'>{{ rare.name }}</p>
                 </div>
@@ -48,7 +48,7 @@
             <div class='types-container'>
                 <div class="type" v-for='type in types' @click='toggle(types, type)'>
                     <div class='type-image'>
-                        <img class='responsive-image' :class='{ inactive: !type.active }' :src='"../assets/types/" + type.name + ".png"' :alt="type.name">
+                        <img class='responsive-image' :class='{ inactive: !type.active }' :src='"../assets/types/" + type.name + ".webp"' :alt="type.name">
                     </div>
                     <p :class='{inactive: !type.active }'>{{ type.name }}s</p>
                 </div>
@@ -101,7 +101,8 @@
         <div class="cards-list">
             <div class="card" v-for='card in filteredByAll' @click='specificCard(card.cardCode)'>
                 <div class="card-image">
-                    <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' :alt="card.name">
+                    <!--<img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".webp"' :alt="card.name">-->
+                    <img class='responsive-image' v-lazy="card.url" :alt="card.name">
                 </div>
             </div>
         </div>
@@ -227,23 +228,6 @@
                     return activeRegionsStrings.includes(card.region)
                 })
             },
-            filteredByCost(cards){
-                if (!this.costs) return cards
-
-                let activeCosts = this.costs.filter((cost) => {
-                    return cost.active === true
-                })
-
-                let activeCostsStrings = activeCosts.map((activeCost) => {
-                    return activeCost.cost
-                })
-
-                let includesSevenCost = activeCostsStrings.includes(7)
-
-                return cards.filter((card) => {
-                    return activeCostsStrings.includes(card.cost) || (card.cost > 7 && includesSevenCost)
-                })
-            },
             filteredByRarity(cards){
                 if (!this.rarity) return cards
 
@@ -272,6 +256,23 @@
 
                 return cards.filter((card) => {
                     return activeTypesStrings.includes(card.type)
+                })
+            },
+            filteredByCost(cards){
+                if (!this.costs) return cards
+
+                let activeCosts = this.costs.filter((cost) => {
+                    return cost.active === true
+                })
+
+                let activeCostsStrings = activeCosts.map((activeCost) => {
+                    return activeCost.cost
+                })
+
+                let includesSevenCost = activeCostsStrings.includes(7)
+
+                return cards.filter((card) => {
+                    return activeCostsStrings.includes(card.cost) || (card.cost > 7 && includesSevenCost)
                 })
             },
             filteredByAttack(cards){
@@ -311,7 +312,11 @@
         },
         computed: {
             filteredByAll(){
-                return this.sortedByCost(this.filteredByCollectible(this.filteredByName(this.filteredByCost(this.filteredByRegion(this.filteredByRarity(this.filteredByType(this.filteredByAttack(this.filteredByHealth(this.cards)))))))))
+                let cards = this.sortedByCost(this.filteredByCollectible(this.filteredByName(this.filteredByCost(this.filteredByRegion(this.filteredByRarity(this.filteredByType(this.filteredByAttack(this.filteredByHealth(this.cards)))))))))
+                cards.map((card) => {
+                    card.url = require("../assets/cards/" + card.cardCode + ".webp")
+                })
+                return cards
             }
         },
         mounted() {

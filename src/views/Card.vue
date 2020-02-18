@@ -6,19 +6,19 @@
             <div class='region-rarity-type-container'>
                 <div class='region'>
                     <div class="region-image">
-                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + ".png"' :alt="card.region">
+                        <img class='responsive-image' :src='"../assets/regions/" + card.regionRef + ".webp"' :alt="card.region">
                     </div>
                     <p :class='card.regionRef'>{{ card.region }}</p>
                 </div>
                 <div class='rarity'>
                     <div class="rarity-image">
-                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + ".png"' :alt="card.rarity">
+                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + ".webp"' :alt="card.rarity">
                     </div>
                     <p :class='card.rarity'>{{ card.rarity }}</p>
                 </div>
                 <div class='type'>
                     <div class='type-image'>
-                        <img class='responsive-image' :src='"../assets/types/" + card.type + ".png"' :alt="card.type">
+                        <img class='responsive-image' :src='"../assets/types/" + card.type + ".webp"' :alt="card.type">
                     </div>
                     <p>{{ card.type }}</p>
                 </div>
@@ -29,11 +29,11 @@
             <div class="associated-cards">
                 <div class="card-images">
                     <!--<div v-for='card in associatedCards' class="card-image">
-                        <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".png"' :alt="card.name">
-                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' :alt="card.name">
+                        <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".webp"' :alt="card.name">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".webp"' :alt="card.name">
                     </div>-->
                     <div class="card-image">
-                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".png"' :alt="card.name">
+                        <img class='responsive-image' :src='"../assets/cards/" + associatedCards[0].cardCode + ".webp"' :alt="card.name">
                         <p>Artist: {{ card.artistName }}</p>
                     </div>
                 </div>
