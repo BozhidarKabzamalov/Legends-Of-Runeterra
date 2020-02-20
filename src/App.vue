@@ -68,7 +68,7 @@
         color: #da996c;
     }
     .Champion {
-        color: #f1d242;
+        color: #ffd300;
     }
     .Epic {
         color: #e881f8;
@@ -77,6 +77,6 @@
         color: #4ba4e4;
     }
     .Common {
-        color: #45a923;
+        color: #61be42;
     }
 </style>
