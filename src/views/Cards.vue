@@ -101,8 +101,7 @@
         <div class="cards-list">
             <div class="card" v-for='card in filteredByAll' @click='specificCard(card.cardCode)'>
                 <div class="card-image">
-                    <!--<img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".webp"' :alt="card.name">-->
-                    <img class='responsive-image' v-lazy="card.url" :alt="card.name">
+                    <img class='responsive-image' v-lazy="require('../assets/cards/webp/' + card.cardCode + '.webp')" :alt="card.name">
                 </div>
             </div>
         </div>
@@ -313,9 +312,7 @@
         computed: {
             filteredByAll(){
                 let cards = this.sortedByCost(this.filteredByCollectible(this.filteredByName(this.filteredByCost(this.filteredByRegion(this.filteredByRarity(this.filteredByType(this.filteredByAttack(this.filteredByHealth(this.cards)))))))))
-                cards.map((card) => {
-                    card.url = require("../assets/cards/" + card.cardCode + ".webp")
-                })
+
                 return cards
             }
         },

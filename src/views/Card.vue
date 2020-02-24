@@ -10,17 +10,20 @@
                     </div>
                     <p class='card-region' :class='activeCard.regionRef'>{{ activeCard.region }}</p>
                 </div>
-                <div class='rarity'>
-                    <div class="rarity-image">
-                        <img class='responsive-image' :src='"../assets/rarity/" + card.rarity + ".webp"' :alt="card.rarity">
-                    </div>
-                    <p class='card-rarity' :class='card.rarity'>{{ card.rarity }}</p>
-                </div>
                 <div class='type'>
                     <div class='type-image'>
                         <img class='responsive-image' :src='"../assets/types/" + activeCard.type + ".webp"' :alt="activeCard.type">
                     </div>
                     <p class='card-type'>{{ activeCard.type }}</p>
+                </div>
+                <div class='rarity' v-if='activeCard.rarity != "None"'>
+                    <div class="rarity-image">
+                        <img class='responsive-image' :src='"../assets/rarity/" + activeCard.rarity + ".webp"' :alt="activeCard.rarity">
+                    </div>
+                    <p class='card-rarity' :class='activeCard.rarity'>{{ activeCard.rarity }}</p>
+                </div>
+                <div class="collectible" v-else>
+                    <p class='card-collectible'>Not Collectible</p>
                 </div>
             </div>
         </div>
@@ -29,11 +32,14 @@
 
             <div class="associated-cards">
                 <div class="card-images">
-                    <div class='card-image-container' v-for='(card, index) in associatedCards'>
-                        <div class="card-image" :class='{ active: index == activeCardIndex }' :style="{ transform: translateX(index), visibility: hidden(index)}" @click='makeCardActive(index)'>
-                            <img class='responsive-image' :src='"../assets/cards/" + card.cardCode + ".webp"' :alt="card.name">
+                    <div class='card-image-container' v-for='(card, index) in associatedCards' :style="{ zIndex: zIndex(index)}" :class='{ active: index == activeCardIndex }'>
+                        <div class="card-image" :style="{ transform: translateX(index), visibility: hidden(index)}" @click='makeCardActive(index)'>
+                            <img class='responsive-image' :src='"../assets/cards/webp/" + card.cardCode + ".webp"' :alt="card.name">
                         </div>
                     </div>
+                </div>
+                <div class="dots-container">
+                    <div class="dot" :class='{ activeDot: index == activeCardIndex }' v-for='(card, index) in associatedCards' @click='makeCardActive(index)'></div>
                 </div>
             </div>
 
@@ -64,7 +70,9 @@
                         <p class='separator-title'>Keywords</p>
                         <div class='separator-line'></div>
                     </div>
-                    <p v-for='keywords in activeCard.keywords'>{{ keywords }}</p>
+                    <div class="keywords-list">
+                        <p class='keyword' v-for='keywords in activeCard.keywords'>{{ keywords }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -100,6 +108,15 @@
                 }
 
                 return "translateX(" + pixels + "px) scale(" + scale + ")"
+            },
+            zIndex(index){
+                if (index == this.activeCardIndex) {
+                    return '3'
+                } else if (index > this.activeCardIndex + 1 || index < this.activeCardIndex - 1) {
+                    return '1'
+                } else {
+                    return '2'
+                }
             },
             hidden(index) {
                 if (index > this.activeCardIndex + 1 || index < this.activeCardIndex - 1) {
@@ -163,22 +180,23 @@
     .card-images {
         display: flex;
         min-height: 361px;
+        position: relative;
+        justify-content: center;
     }
     .card-image-container {
-        position: relative;
+        position: absolute;
+        cursor: pointer;
+        opacity: 0.75;
+        transition: all .3s linear;
     }
     .card-image {
-        position: absolute;
         width: 240px;
-        height: 361px;
-        opacity: 0.50;
-        transition: all .2s linear;
+        transition: all .3s linear;
     }
     .active {
-        z-index: 3;
         opacity: 1;
     }
-    .region, .rarity, .type {
+    .region, .rarity, .type, .collectible {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -195,6 +213,9 @@
     }
     .description-container, .level-up-container, .flavor-text-container, .keywords-container {
         margin-bottom: 30px;
+    }
+    .keyword {
+        margin-bottom: 10px;
     }
     .separator {
         display: flex;
@@ -214,7 +235,27 @@
         width: 100%;
         background-color: #1b2d33;
     }
-    .card-region, .card-rarity, .card-type {
+    .card-region, .card-rarity, .card-type, .card-collectible {
         font-weight: 700;
+    }
+    .dots-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+    }
+    .dot {
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background-color: #d3d3d3;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .dot:last-child {
+        margin-right: 0px;
+    }
+    .activeDot {
+        background-color: #5bacd1;
     }
 </style>
